@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin')
+const MinimizePlugin = require('css-minimizer-webpack-plugin')
+const terserPlugin = require( 'terser-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -9,7 +11,8 @@ module.exports = {
     // permite saber donde se encunra el proyecto 
     path: path.resolve(__dirname, 'dist'),
     // nombre del archivo resultante
-    filename: 'main.js'
+    filename: '[name].[contenthash].js',
+    assetModuleFilename: "assets/images/[hash][ext][query]"
   },
   // que es lo que va atrabajar js, svel, react, typescript
   resolve: {
@@ -35,6 +38,25 @@ module.exports = {
       {
         test: /\.png/,
         type: 'asset/resource'
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+          options:{
+            // limite del tamaño del archivo
+            limit: 10000,
+            // Tipo de dato
+            mimetype: 'application/font-woff',
+            //nombre del archivo
+            name: "[name].[contenthash].[ext]",
+            // salida de los archivos
+            outputPath: "./assets/fonts/",
+
+            publicPath: "./assets/fonts/",
+            esModule: false
+          }
+        }
       }
     ]
   },
@@ -44,7 +66,9 @@ module.exports = {
       template: './public/index.html',
       filename: './index.html'
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/[name].[contenthash].css'
+    }),
     new CopyPlugin({
       patterns: [
         {
@@ -53,5 +77,12 @@ module.exports = {
         }
       ]
     })
-  ]
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new MinimizePlugin(),
+      new terserPlugin()
+    ]
+  }
 }

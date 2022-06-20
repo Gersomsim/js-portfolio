@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -15,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: '/\.m?js$/', // utiliza la extencion mjs o js mjs es extencion modulos de javascript
+        test: '/\.m?js$/', // utiliza la extencion mjs o js. mjs es extencion modulos de javascript
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -23,4 +24,11 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './public/index.html',
+      filename: './index.html'
+    })
+  ]
 }

@@ -11,5 +11,16 @@ module.exports = {
   // que es lo que va atrabajar js, svel, react, typescript
   resolve: {
     extensions: ['.js']
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: '/\.m?js$/', // utiliza la extencion mjs o js mjs es extencion modulos de javascript
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  },
 }

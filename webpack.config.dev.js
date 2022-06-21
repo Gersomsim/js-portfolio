@@ -13,6 +13,7 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]"
   },
   mode: 'development',
+  watch: true,
   // que es lo que va atrabajar js, svel, react, typescript
   resolve: {
     extensions: ['.js'],

@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
+const dotEnv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -13,7 +14,6 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]"
   },
   mode: 'development',
-  watch: true,
   // que es lo que va atrabajar js, svel, react, typescript
   resolve: {
     extensions: ['.js'],
@@ -82,6 +82,13 @@ module.exports = {
           to: "assets/images"
         }
       ]
-    })
+    }),
+    new dotEnv(),
   ],
+  devServer: {
+    static: path.join( __dirname, 'dist'),
+    compress: true,
+    historyApiFallback: true,
+    port: 3006,
+  }
 }

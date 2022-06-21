@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin')
 const MinimizePlugin = require('css-minimizer-webpack-plugin')
 const terserPlugin = require( 'terser-webpack-plugin')
+const dotEnv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -59,7 +60,7 @@ module.exports = {
             // salida de los archivos
             outputPath: "./assets/fonts/",
 
-            publicPath: "./assets/fonts/",
+            publicPath: "../assets/fonts/",
             esModule: false
           }
         }
@@ -82,7 +83,8 @@ module.exports = {
           to: "assets/images"
         }
       ]
-    })
+    }),
+    new dotEnv()
   ],
   optimization: {
     minimize: true,

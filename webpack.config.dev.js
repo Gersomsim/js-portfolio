@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const dotEnv = require('dotenv-webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: './src/index.js',
@@ -15,6 +15,7 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]"
   },
   mode: 'development',
+  devtool: 'source-map',
   // que es lo que va atrabajar js, svel, react, typescript
   resolve: {
     extensions: ['.js'],
